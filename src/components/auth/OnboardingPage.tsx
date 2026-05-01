@@ -166,7 +166,7 @@ export default function OnboardingPage() {
           {step === 'stream' && (
             <div>
               <p className="text-slate-400 text-sm mb-4">Choose your GATE paper. You can only see and track your selected stream.</p>
-              <div className="grid grid-cols-2 gap-2.5 max-h-72 overflow-y-auto pr-1">
+              <div className="grid grid-cols-1 gap-2 max-h-72 overflow-y-auto pr-1">
                 {ALL_STREAMS.map(stream => (
                   <button key={stream.id} onClick={() => setSelectedStream(stream.id)}
                     className={`flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all ${
@@ -177,7 +177,8 @@ export default function OnboardingPage() {
                     <span className="text-2xl leading-none">{stream.icon}</span>
                     <div>
                       <div className={`text-sm font-bold ${selectedStream === stream.id ? 'text-white' : 'text-slate-200'}`}>{stream.shortName}</div>
-                      <div className="text-[10px] font-mono text-slate-500">GATE {stream.examCode}</div>
+                      <div className="text-[11px] text-slate-400 leading-tight">{stream.name}</div>
+                      <div className="text-[10px] font-mono text-slate-500 mt-0.5">GATE {stream.examCode}</div>
                     </div>
                     {selectedStream === stream.id && <CheckCircle2 className="w-4 h-4 text-violet-400 ml-auto flex-shrink-0" />}
                   </button>
