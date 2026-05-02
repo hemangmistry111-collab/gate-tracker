@@ -8,7 +8,7 @@ export const ECE_SUBJECTS: Subject[] = [
     topics: [
       { id: 'ece-nss-01', name: 'KVL, KCL & Basic Circuit Analysis', difficulty: 'Easy', done: false, estimatedHours: 4 },
       { id: 'ece-nss-02', name: 'Thevenin & Norton Theorems', difficulty: 'Medium', done: false, estimatedHours: 4 },
-      { id: 'ece-nss-03', name: 'Superposition & Maximum Power Transfer', difficulty: 'Medium', done: false, estimatedHours: 3 },
+      { id: 'ece-nss-03', name: 'Superposition & Maximum Power Transfer', difficulty: 'Easy', done: false, estimatedHours: 3 },
       { id: 'ece-nss-04', name: 'AC Circuit Analysis — Phasors, Impedance', difficulty: 'Medium', done: false, estimatedHours: 5 },
       { id: 'ece-nss-05', name: 'Two-Port Networks (Z, Y, h, ABCD Parameters)', difficulty: 'Hard', done: false, estimatedHours: 6 },
       { id: 'ece-nss-06', name: 'Resonance — Series & Parallel RLC', difficulty: 'Medium', done: false, estimatedHours: 4 },
@@ -49,8 +49,8 @@ export const ECE_SUBJECTS: Subject[] = [
       { id: 'ece-ac-05', name: 'BJT Amplifiers — CE, CB, CC Configurations', difficulty: 'Hard', done: false, estimatedHours: 6 },
       { id: 'ece-ac-06', name: 'FET — MOSFET & JFET Characteristics', difficulty: 'Medium', done: false, estimatedHours: 5 },
       { id: 'ece-ac-07', name: 'FET Amplifiers & Biasing', difficulty: 'Hard', done: false, estimatedHours: 5 },
-      { id: 'ece-ac-08', name: 'Operational Amplifiers — Ideal & Practical', difficulty: 'Medium', done: false, estimatedHours: 4 },
-      { id: 'ece-ac-09', name: 'Op-Amp Applications (Differentiator, Integrator, Comparator)', difficulty: 'Hard', done: false, estimatedHours: 5 },
+      { id: 'ece-ac-08', name: 'Operational Amplifiers — Ideal & Practical', difficulty: 'Easy', done: false, estimatedHours: 4 },
+      { id: 'ece-ac-09', name: 'Op-Amp Applications (Differentiator, Integrator, Comparator)', difficulty: 'Medium', done: false, estimatedHours: 5 },
       { id: 'ece-ac-10', name: 'Feedback Amplifiers — Types & Stability', difficulty: 'Hard', done: false, estimatedHours: 6 },
       { id: 'ece-ac-11', name: 'Oscillators — RC, LC, Crystal', difficulty: 'Hard', done: false, estimatedHours: 5 },
       { id: 'ece-ac-12', name: 'Frequency Response & Bode Plots', difficulty: 'Hard', done: false, estimatedHours: 5 },
@@ -69,7 +69,7 @@ export const ECE_SUBJECTS: Subject[] = [
       { id: 'ece-dc-05', name: 'Flip-Flops — SR, JK, D, T', difficulty: 'Medium', done: false, estimatedHours: 4 },
       { id: 'ece-dc-06', name: 'Sequential Circuits — Counters & Shift Registers', difficulty: 'Medium', done: false, estimatedHours: 5 },
       { id: 'ece-dc-07', name: 'Finite State Machines — Mealy & Moore', difficulty: 'Hard', done: false, estimatedHours: 5 },
-      { id: 'ece-dc-08', name: 'Memories — SRAM, DRAM, ROM types', difficulty: 'Medium', done: false, estimatedHours: 3 },
+      { id: 'ece-dc-08', name: 'Memories — SRAM, DRAM, ROM types', difficulty: 'Easy', done: false, estimatedHours: 3 },
       { id: 'ece-dc-09', name: 'PLDs — PAL, PLA, FPGA Basics', difficulty: 'Medium', done: false, estimatedHours: 3 },
       { id: 'ece-dc-10', name: 'ADC & DAC Circuits', difficulty: 'Medium', done: false, estimatedHours: 4 },
     ]
