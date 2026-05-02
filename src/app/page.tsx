@@ -51,7 +51,7 @@ export default function HomePage() {
           </div>
 
           <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-            Crack <span className="text-gradient">GATE 2026</span>
+            Crack <span className="text-gradient">GATE</span>
             <br />with Smart Tracking
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-10">
