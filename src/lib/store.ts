@@ -66,7 +66,7 @@ export const useAppStore = create<AppState>()(
       clearChatHistory: (streamId) => {
         set(s => ({ chatHistory: { ...s.chatHistory, [streamId]: [] } }))
       },
-      targetDate: '2026-02-01',
+      targetDate: '2027-02-01',
       dailyGoalHours: 6,
       userName: 'Aspirant',
       setTargetDate: (d) => set({ targetDate: d }),
@@ -83,7 +83,7 @@ export const useAppStore = create<AppState>()(
           .maybeSingle()
         set({
           activeStream: (profile.selected_stream as StreamId) || 'cs',
-          targetDate: profile.target_date || '2026-02-01',
+          targetDate: profile.target_date || '2027-02-01',
           dailyGoalHours: profile.daily_goal_hours || 6,
           userName: profile.full_name || 'Aspirant',
           completedTopics: progress?.completed_topics || {},

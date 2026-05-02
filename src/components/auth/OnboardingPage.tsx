@@ -32,15 +32,17 @@ export default function OnboardingPage() {
   const [state, setState] = useState('Gujarat')
 
   const [selectedStream, setSelectedStream] = useState('')
-  const [targetDate, setTargetDate] = useState('2026-02-01')
+  const [targetDate, setTargetDate] = useState('2027-02-01')
   const [dailyGoal, setDailyGoal] = useState(6)
+
+  const today = new Date().toISOString().split('T')[0]
 
   const stepIndex = STEPS.indexOf(step)
   const canNext: Record<Step, boolean> = {
     profile: !!fullName.trim(),
     institute: !!institute.trim() && !!city.trim(),
     stream: !!selectedStream,
-    goal: true,
+    goal: !!targetDate && targetDate >= today,
   }
 
   const next = () => {
@@ -192,7 +194,10 @@ export default function OnboardingPage() {
             <div className="space-y-6">
               <div>
                 <label className="block text-xs font-mono text-slate-500 uppercase tracking-wider mb-2">GATE Target Date</label>
-                <input type="date" className="input" value={targetDate} onChange={e => setTargetDate(e.target.value)} />
+                <input type="date" className="input" value={targetDate} min={today} onChange={e => setTargetDate(e.target.value)} />
+                {targetDate && targetDate < today && (
+                  <p className="text-xs text-red-400 mt-1">Please select a future date — GATE 2026 has passed.</p>
+                )}
               </div>
               <div>
                 <label className="block text-xs font-mono text-slate-500 uppercase tracking-wider mb-3">

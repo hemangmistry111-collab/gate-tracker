@@ -29,6 +29,7 @@ export default function SettingsPage() {
   const [hours, setHours] = useState(dailyGoalHours)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const today = new Date().toISOString().split('T')[0]
 
   const save = async () => {
     setSaving(true)
@@ -142,10 +143,13 @@ export default function SettingsPage() {
             </div>
             <div>
               <label className="block text-xs font-mono text-slate-500 uppercase tracking-wider mb-2">Target Exam Date</label>
-              <input type="date" className="input" value={date} onChange={e => setDate(e.target.value)} />
-              {date && (
+              <input type="date" className="input" value={date} min={today} onChange={e => setDate(e.target.value)} />
+              {date && date < today && (
+                <p className="text-xs text-red-400 mt-2 font-mono">This date is in the past — please pick a future date.</p>
+              )}
+              {date && date >= today && (
                 <p className="text-xs text-amber-400 mt-2 font-mono">
-                  {daysLeft > 0 ? `${daysLeft} days remaining` : 'Exam date passed!'}
+                  {daysLeft > 0 ? `${daysLeft} days remaining` : ''}
                 </p>
               )}
             </div>
@@ -167,7 +171,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <button onClick={save} disabled={saving}
+          <button onClick={save} disabled={saving || (!!date && date < today)}
             className="btn-primary w-full justify-center py-3 disabled:opacity-60">
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             {saved ? 'Saved! ✓' : saving ? 'Saving...' : 'Save Settings'}
@@ -183,4 +187,4 @@ export default function SettingsPage() {
       </div>
     </AppShell>
   )
-}
+} 
