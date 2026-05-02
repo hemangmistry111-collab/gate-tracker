@@ -3,12 +3,13 @@ import { useEffect, useRef } from 'react'
 import { useAuth } from '@/lib/auth-context'
 import { useAppStore } from '@/lib/store'
 
-// Loads user data from DB on login, and auto-saves every 30s
+// Loads user data from DB on login, and auto-saves every 30s.
+// NOTE: This component is now only rendered inside AuthGate for authenticated+onboarded users.
 export default function DbSync() {
   const { user, profile } = useAuth()
   const { loadFromDb, syncToDb } = useAppStore()
   const loaded = useRef(false)
-  const syncTimer = useRef<NodeJS.Timeout>()
+  const syncTimer = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     if (user && profile && !loaded.current) {
@@ -23,13 +24,26 @@ export default function DbSync() {
     if (!user) loaded.current = false
   }, [user, profile])
 
-  // Auto-sync to DB every 30 seconds
+  // FIX: Clear any existing interval before creating a new one to prevent
+  // double-sync if the user logs out and back in during the same session
   useEffect(() => {
     if (!user) return
+
+    if (syncTimer.current) {
+      clearInterval(syncTimer.current)
+      syncTimer.current = null
+    }
+
     syncTimer.current = setInterval(() => {
       syncToDb(user.id)
     }, 30000)
-    return () => clearInterval(syncTimer.current)
+
+    return () => {
+      if (syncTimer.current) {
+        clearInterval(syncTimer.current)
+        syncTimer.current = null
+      }
+    }
   }, [user])
 
   // Sync on page unload

@@ -74,11 +74,13 @@ export const useAppStore = create<AppState>()(
       setUserName: (n) => set({ userName: n }),
 
       loadFromDb: async (userId, profile) => {
+        // FIX: use maybeSingle() instead of single() — single() throws a 406 error
+        // when no row exists yet (e.g. brand new users who haven't synced yet)
         const { data: progress } = await supabase
           .from('user_progress')
           .select('*')
           .eq('user_id', userId)
-          .single()
+          .maybeSingle()
         set({
           activeStream: (profile.selected_stream as StreamId) || 'cs',
           targetDate: profile.target_date || '2026-02-01',
@@ -153,16 +155,36 @@ export const useAppStore = create<AppState>()(
         )
         let streak = 0
         const today = new Date()
-        for (let i = 0; i < 365; i++) {
+        // FIX: Start from i=1 (yesterday) so a streak isn't broken just because
+        // the user hasn't logged hours yet today (e.g. early in the morning)
+        for (let i = 1; i <= 365; i++) {
           const d = new Date(today)
           d.setDate(d.getDate() - i)
           const key = d.toISOString().split('T')[0]
           if (studyHours[key] && studyHours[key] > 0) streak++
-          else if (i > 0) break
+          else break
         }
+        // Count today separately so it still adds to streak if logged
+        const todayKey = today.toISOString().split('T')[0]
+        if (studyHours[todayKey] && studyHours[todayKey] > 0) streak++
+
         return { totalTopics, doneTopics, pct: totalTopics ? Math.round(doneTopics / totalTopics * 100) : 0, streak }
       },
     }),
-    { name: 'gate-tracker-store', version: 2 }
+    {
+      name: 'gate-tracker-store',
+      version: 3,  // FIX: bumped from 2 → 3 with a migrate function so existing
+                   // users don't get wiped when the store shape changes in future
+      migrate: (persistedState: any, version: number) => {
+        if (version < 3) {
+          // v2 → v3: no shape change, just ensuring migration path exists
+          return {
+            ...persistedState,
+            chatHistory: persistedState.chatHistory || {},
+          }
+        }
+        return persistedState as AppState
+      },
+    }
   )
 )

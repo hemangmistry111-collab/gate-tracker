@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     }
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-5',   // FIX: was 'claude-sonnet-4-20250514' (invalid model string)
       max_tokens: 1500,
       system: system || 'You are a helpful GATE exam preparation assistant.',
       messages: messages.map((m: { role: string; content: string }) => ({

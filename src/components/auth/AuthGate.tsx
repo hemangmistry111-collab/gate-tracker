@@ -1,9 +1,9 @@
 'use client'
 import { useAuth } from '@/lib/auth-context'
-import { usePathname, useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import AuthPage from '@/components/auth/AuthPage'
 import OnboardingPage from '@/components/auth/OnboardingPage'
+import DbSync from '@/components/auth/DbSync'
 import { Loader2 } from 'lucide-react'
 
 // Pages that don't require login
@@ -15,6 +15,11 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
 
   const isPublic = PUBLIC_PATHS.includes(pathname)
 
+  // FIX: Home page should NEVER be blocked by the loading spinner.
+  // Show it immediately — the navbar handles its own auth state display.
+  if (isPublic) return <>{children}</>
+
+  // For protected pages only: show spinner while auth resolves
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
@@ -28,14 +33,18 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
     )
   }
 
-  // Home page: always show it (logged in or not)
-  if (isPublic) return <>{children}</>
-
   // Protected pages: require login
   if (!user) return <AuthPage />
 
   // Require onboarding if name not filled
   if (!profile || !profile.full_name || !profile.full_name.trim()) return <OnboardingPage />
 
-  return <>{children}</>
+  // FIX: DbSync only mounts for fully authenticated + onboarded users,
+  // eliminating the data race where it could fire before auth was ready
+  return (
+    <>
+      <DbSync />
+      {children}
+    </>
+  )
 }
